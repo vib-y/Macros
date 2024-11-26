@@ -32,7 +32,8 @@ task.spawn(function()
             instanfunc = false
             for i = 1, 10 do
                 print(i, buff, tab)
-                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(buff, tab)
+                local testtable = {buff, tab}
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(testtable))
             end
         end
     end
@@ -57,6 +58,10 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
                 for is,vs in pairs(args) do
                     if is == 2 then
                         tab = vs
+
+                        for iss,vss in pairs(vs[1]) do
+                            print(iss,vss)
+                        end
                     end
                     if is == 1 then
                         buff = vs
