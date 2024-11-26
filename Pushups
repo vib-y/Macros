@@ -62,6 +62,8 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
                     print("Done")
                 end)
 
+                print("Early")
+
                 return Old(self, ...)
             end
         end
