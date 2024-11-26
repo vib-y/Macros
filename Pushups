@@ -1,3 +1,4 @@
+_G.Time = .8
 local CorrectAnimation
 
 local function CheckIfRunning()
@@ -12,28 +13,13 @@ local function CheckIfRunning()
 end
 
 local AnimTimPos = 0
-
-task.spawn(function()
-    while task.wait(.05) do
-        CorrectAnimation = CheckIfRunning()
-        if CorrectAnimation then
-            AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
-        end
-    end
-end)
-
-local instanfunc = false
-local fargs = nil
+local Push = false
 
 task.spawn(function()
     while task.wait() do
-        if instanfunc then
-            repeat task.wait() until AnimTimPos > _G.AnimTime
-            instanfunc = false
-            for i = 1, 10 do
-                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(fargs))
-                print(i, unpack(fargs))
-            end
+        CorrectAnimation = CheckIfRunning()
+        if CorrectAnimation then
+            AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
         end
     end
 end)
@@ -47,8 +33,8 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
     if not checkcaller() and self == RemoteLoc and method == "fireserver" then
         if args[2] then
             if args[2][1][1] == "Reply" then
-                instanfunc = true
-                fargs = args
+                _G.Buffer = args[1]
+                Push = true
 
                 return Old(self, ...)
             end
@@ -58,3 +44,30 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
         return Old(self, ...)
     end
 end))
+
+
+while task.wait() do
+    if _G.Buffer then
+        if Push then
+            Push = false
+            repeat task.wait() until AnimTimPos > _G.Time
+            for i = 1, 100 do
+                local args = {
+                    [1] = _G.Buffer,
+                    [2] = {
+                        [1] = {
+                            [1] = "Reply",
+                            [2] = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Trainings.Square.Keybind.Text
+                        }
+                    }
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(args))
+            end
+        end
+    end
+end
+
+
+
+
