@@ -34,7 +34,7 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
         if args[2] then
             if args[2][1][1] == "Reply" then
                 task.spawn(function()
-                    repeat task.wait() until AnimTimPos > .5
+                    repeat task.wait() until AnimTimPos > _G.AnimTime
 
                     local buff 
                     local tab
