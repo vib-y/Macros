@@ -3,7 +3,7 @@ local CorrectAnimation
 
 local function CheckIfRunning()
     for i,v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
-        if v.Animation.AnimationId == "rbxassetid://18959775178" then
+        if v.Animation.AnimationId == "rbxassetid://18959775178" or  v.Animation.AnimationId == "rbxassetid://134103570218892" then
             if v.IsPlaying == true then
                 return v
             end
