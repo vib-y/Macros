@@ -23,17 +23,16 @@ task.spawn(function()
 end)
 
 local instanfunc = false
-local buff 
-local tab
+local fargs = nil
 
 task.spawn(function()
     while task.wait() do
         if instanfunc then
+            repeat task.wait() until AnimTimPos > _G.AnimTime
             instanfunc = false
             for i = 1, 10 do
-                print(i, buff, tab)
-                local testtable = {buff, tab}
-                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(testtable))
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(fargs))
+                print(i, unpack(fargs))
             end
         end
     end
@@ -48,27 +47,8 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
     if not checkcaller() and self == RemoteLoc and method == "fireserver" then
         if args[2] then
             if args[2][1][1] == "Reply" then
-                task.spawn(function()
-                    repeat task.wait() until AnimTimPos > _G.AnimTime
-
-                    instanfunc = true
-                    print("Done")
-                end)
-
-                for is,vs in pairs(args) do
-                    if is == 2 then
-                        tab = vs
-
-                        for iss,vss in pairs(vs[1]) do
-                            print(iss,vss)
-                        end
-                    end
-                    if is == 1 then
-                        buff = vs
-                    end
-                end
-
-                print("Early")
+                instanfunc = true
+                fargs = args
 
                 return Old(self, ...)
             end
