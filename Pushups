@@ -1,4 +1,4 @@
-_G.Time = .8
+
 local CorrectAnimation
 
 local function CheckIfRunning()
@@ -14,6 +14,7 @@ end
 
 local AnimTimPos = 0
 local Push = false
+local Key = nil
 
 task.spawn(function()
     while task.wait() do
@@ -35,6 +36,7 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
             if args[2][1][1] == "Reply" then
                 _G.Buffer = args[1]
                 Push = true
+                Key = args[2][1][2]
 
                 return Old(self, ...)
             end
@@ -57,7 +59,7 @@ while task.wait() do
                     [2] = {
                         [1] = {
                             [1] = "Reply",
-                            [2] = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Trainings.Square.Keybind.Text
+                            [2] = Key
                         }
                     }
                 }
@@ -67,7 +69,3 @@ while task.wait() do
         end
     end
 end
-
-
-
-
