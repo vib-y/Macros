@@ -53,7 +53,7 @@ while task.wait() do
         if Push then
             Push = false
             repeat task.wait() until AnimTimPos > _G.Time
-            for i = 1, 100 do
+            for i = 1, _G.Multi do
                 local args = {
                     [1] = _G.Buffer,
                     [2] = {
