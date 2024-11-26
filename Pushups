@@ -31,6 +31,7 @@ task.spawn(function()
         if instanfunc then
             instanfunc = false
             for i = 1, 10 do
+                print(i)
                 game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(buff, tab)
             end
         end
