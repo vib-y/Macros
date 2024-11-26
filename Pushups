@@ -22,7 +22,20 @@ task.spawn(function()
     end
 end)
 
+local instanfunc = false
+local buff 
+local tab
 
+task.spawn(function()
+    while task.wait() do
+        if instanfunc then
+            instanfunc = false
+            for i = 1, 10 do
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(buff, tab)
+            end
+        end
+    end
+end)
 
 local Old
 local RemoteLoc = game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable")
@@ -35,10 +48,6 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
             if args[2][1][1] == "Reply" then
                 task.spawn(function()
                     repeat task.wait() until AnimTimPos > _G.AnimTime
-
-                    local buff 
-                    local tab
-
                     for is,vs in pairs(args) do
                         if is == 2 then
                             tab = vs
@@ -48,12 +57,7 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
                         end
                     end
 
-                    print(buff, tab)
-
-                    for wasd = 1, 10 do
-                        --print(buff, tab)
-                        RemoteLoc:FireServer(buff, tab)
-                    end
+                    instanfunc = true
                     print("Done")
                 end)
 
@@ -65,5 +69,3 @@ Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
         return Old(self, ...)
     end
 end))
-
-
