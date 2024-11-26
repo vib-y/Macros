@@ -1,0 +1,69 @@
+local CorrectAnimation
+
+local function CheckIfRunning()
+    for i,v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+        if v.Animation.AnimationId == "rbxassetid://18959775178" then
+            if v.IsPlaying == true then
+                return v
+            end
+        end
+    end
+    return false
+end
+
+local AnimTimPos = 0
+
+task.spawn(function()
+    while task.wait(.05) do
+        CorrectAnimation = CheckIfRunning()
+        if CorrectAnimation then
+            AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
+        end
+    end
+end)
+
+
+local Old
+local RemoteLoc = game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable")
+Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+    local args = {...}
+    local method = getnamecallmethod():lower()
+
+    if not checkcaller() and self == RemoteLoc and method == "fireserver" then
+        if args[2] then
+            if args[2][1][1] == "Reply" then
+                task.spawn(function()
+                    repeat task.wait() until AnimTimPos > .5
+
+                    local buff 
+                    local tab
+
+                    for is,vs in pairs(args) do
+                        if is == 2 then
+                            tab = vs
+                        end
+                        if is == 1 then
+                            buff = vs
+                        end
+                    end
+
+                    print(buff, tab)
+
+                    for wasd = 1, 10 do
+                        print(buff, tab)
+                        --RemoteLoc:FireServer(buff, tab)
+                    end
+                    print("Done")
+                end)
+
+                return Old(self, ...)
+            end
+        end
+        return Old(self, ...)
+    else
+        return Old(self, ...)
+    end
+end))
+
+
+
