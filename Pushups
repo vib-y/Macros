@@ -1,4 +1,7 @@
 
+if _G.Enabled then return end
+_G.Enabled = true
+
 local CorrectAnimation
 
 local function CheckIfRunning()
@@ -53,19 +56,26 @@ while task.wait() do
         if Push then
             Push = false
             repeat task.wait() until AnimTimPos > _G.Time
-            for i = 1, _G.Multi do
-                local args = {
-                    [1] = _G.Buffer,
-                    [2] = {
-                        [1] = {
-                            [1] = "Reply",
-                            [2] = Key
+            local Multi = _G.Multi
+            local Buffer = _G.Buffer
+
+            for i = 1, Multi do
+                if AnimTimPos <= .99 then
+                    local args = {
+                        [1] = Buffer,
+                        [2] = {
+                            [1] = {
+                                [1] = "Reply",
+                                [2] = Key
+                            }
                         }
                     }
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(args))
+                    
+                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(args))
+                end
             end
         end
     end
 end
+
+
