@@ -1,6 +1,7 @@
 if _G.Enabled then print("Executed Twice!") return end
 _G.Enabled = true
 
+if not _G.EXMulti then _G.EXMulti = 10 end
 if not _G.Multi then _G.Multi = 50 end
 if not _G.Time then _G.Time = .85 end
 
@@ -35,14 +36,18 @@ task.spawn(function()
         CorrectAnimation = CheckAnimation()
         if CorrectAnimation then
             AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
+        else
+            AnimTimPos = 0
         end
     end
 end)
 
+print("Step2")
+
 local CurrentKey = nil
 task.spawn(function()
     while task.wait() do
-        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and Player.PlayerGui.Hud.Trainings:FindFirstChild("Square") then
+        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and Player.PlayerGui.HUD.Trainings:FindFirstChild("Square") then
             print("Start")
             CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Keybind.Text
 
@@ -56,12 +61,15 @@ task.spawn(function()
             Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
 
             task.wait(.1)
-            repeat task.wait() until AnimTimPos > _G.Time
+            repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0
+            if AnimTimPos == 0 then return end
+            
+            local ExtraMulti = _G.EXMulti
 
-            for 1 = 1, 10 do
+            for i = 1, ExtraMulti do
                 task.spawn(function()
                     local CalcMulti = (_G.Multi/10)
-                    for 1 = 1, CalcMulti do
+                    for i = 1, CalcMulti do
                         if AnimTimPos <= .98 then
                             Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
                         end
@@ -73,4 +81,3 @@ task.spawn(function()
         end
     end
 end)
-
