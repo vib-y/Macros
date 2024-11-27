@@ -42,7 +42,7 @@ task.spawn(function()
     end
 end)
 
-print("Step2")
+print("LOAD")
 
 local CurrentKey = nil
 task.spawn(function()
@@ -62,22 +62,26 @@ task.spawn(function()
 
             task.wait(.1)
             repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0
-            if AnimTimPos == 0 then return end
-            
+
             local ExtraMulti = _G.EXMulti
 
-            for i = 1, ExtraMulti do
-                task.spawn(function()
-                    local CalcMulti = (_G.Multi/10)
-                    for i = 1, CalcMulti do
-                        if AnimTimPos <= .98 then
-                            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+            if AnimTimPos == 0 then
+               print("Canceled?")
+            else
+                for i = 1, ExtraMulti do
+                    task.spawn(function()
+                        local CalcMulti = (_G.Multi/10)
+                        for i = 1, CalcMulti do
+                            if AnimTimPos <= .98 then
+                                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                            end
                         end
-                    end
-                end)
+                    end)
+                end
             end
 
             task.wait(.5)
         end
     end
 end)
+
