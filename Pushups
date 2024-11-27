@@ -1,11 +1,27 @@
 
-if _G.Enabled then return end
+if _G.Enabled then print("Executed Twice!") return end
 _G.Enabled = true
 
-local CorrectAnimation
+if not _G.Multi then _G.Multi = 50 end
+if not _G.Time then _G.Time = .85 end
 
-local function CheckIfRunning()
-    for i,v in pairs(game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+local Players = cloneref(game:GetService("Players"))
+local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+local Player = Players.LocalPlayer
+
+local BufferStorage = {
+    ["SettingsBuffer"] = buffer.fromstring(""),
+    ["PurchaseBuffer"] = buffer.fromstring(""),
+    ["NPCBuffer"] = buffer.fromstring(""),
+    ["TrainingBuffer"] = buffer.fromstring(""),
+}
+
+local CorrectAnimation
+local AnimTimePos = 0
+local Reliable = ReplicatedStorage.Packages["_Index"]["imezx_warp@1.0.9"].warp.Index.Event.Reliable
+
+local function CheckAnimation()
+    for i,v in pairs(Player.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
         if v.Animation.AnimationId == "rbxassetid://18959775178" or v.Animation.AnimationId == "rbxassetid://134103570218892" or v.Animation.AnimationId == "rbxassetid://128853198998904" then
             if v.IsPlaying == true then
                 return v
@@ -15,67 +31,47 @@ local function CheckIfRunning()
     return false
 end
 
-local AnimTimPos = 0
-local Push = false
-local Key = nil
-
 task.spawn(function()
     while task.wait() do
-        CorrectAnimation = CheckIfRunning()
+        CorrectAnimation = CheckAnimation()
         if CorrectAnimation then
             AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
         end
     end
 end)
 
-local Old
-local RemoteLoc = game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable")
-Old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
-    local args = {...}
-    local method = getnamecallmethod():lower()
+local CurrentKey = nil
+task.spawn(function()
+    while task.wait() do
+        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 then
+            print("Start")
+            CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Text
 
-    if not checkcaller() and self == RemoteLoc and method == "fireserver" then
-        if args[2] then
-            if args[2][1][1] == "Reply" then
-                _G.Buffer = args[1]
-                Push = true
-                Key = args[2][1][2]
+            local TrainingTemplate = {
+                [1] = {
+                    [1] = "Reply",
+                    [2] = CurrentKey
+                }
+            }
 
-                return Old(self, ...)
-            end
-        end
-        return Old(self, ...)
-    else
-        return Old(self, ...)
-    end
-end))
+            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
 
-
-while task.wait() do
-    if _G.Buffer then
-        if Push then
-            Push = false
+            task.wait(.1)
             repeat task.wait() until AnimTimPos > _G.Time
-            local Multi = _G.Multi
-            local Buffer = _G.Buffer
 
-            for i = 1, Multi do
-                if AnimTimPos <= .99 then
-                    local args = {
-                        [1] = Buffer,
-                        [2] = {
-                            [1] = {
-                                [1] = "Reply",
-                                [2] = Key
-                            }
-                        }
-                    }
-                    
-                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("imezx_warp@1.0.9"):WaitForChild("warp"):WaitForChild("Index"):WaitForChild("Event"):WaitForChild("Reliable"):FireServer(unpack(args))
-                end
+            for 1 = 1, 10 do
+                task.spawn(function()
+                    local CalcMulti = (_G.Multi/10)
+                    for 1 = 1, CalcMulti do
+                        if AnimTimPos <= .98 then
+                            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                        end
+                    end
+                end)
             end
+
+            task.wait(.5)
         end
     end
-end
-
+end)
 
