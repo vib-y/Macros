@@ -1,4 +1,3 @@
-
 if _G.Enabled then print("Executed Twice!") return end
 _G.Enabled = true
 
@@ -43,9 +42,9 @@ end)
 local CurrentKey = nil
 task.spawn(function()
     while task.wait() do
-        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 then
+        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and Player.PlayerGui.Hud.Trainings:FindFirstChild("Square") then
             print("Start")
-            CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Text
+            CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Keybind.Text
 
             local TrainingTemplate = {
                 [1] = {
