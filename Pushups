@@ -16,7 +16,7 @@ local BufferStorage = {
 }
 
 local CorrectAnimation
-local AnimTimePos = 0
+local AnimTimPos = 0
 local Reliable = ReplicatedStorage.Packages["_Index"]["imezx_warp@1.0.9"].warp.Index.Event.Reliable
 
 local function CheckAnimation()
