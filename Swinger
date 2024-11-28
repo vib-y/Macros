@@ -69,22 +69,24 @@ task.spawn(function()
                print("Canceled?")
             else
                 for i = 1, ExtraMulti do
-                    task.spawn(function()
-                        local CalcMulti = (_G.Multi/10)
-                        for i = 1, CalcMulti do
-                            if AnimTimPos <= .98 then
+                    local CalcMulti = (_G.Multi/ExtraMulti)
+                    for i = 1, CalcMulti do
+                        if AnimTimPos <= .98 then
+                            task.spawn(function()
                                 Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-                            end
+                            end)
                         end
-                    end)
-                    local TrainingTemplate = {
-                        [1] = {
-                            [1] = "Reply",
-                            [2] = "0"
+                    end
+                    task.spawn(function()
+                        local TrainingTemplate = {
+                            [1] = {
+                                [1] = "Reply",
+                                [2] = "0"
+                            }
                         }
-                    }
-                    
-                    Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                        
+                        Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                    end)
                 end
             end
 
