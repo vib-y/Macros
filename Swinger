@@ -74,7 +74,6 @@ task.spawn(function()
                         for i = 1, CalcMulti do
                             if AnimTimPos <= .98 then
                                 Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-                                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
                             end
                         end
                     end)
@@ -93,4 +92,3 @@ task.spawn(function()
         end
     end
 end)
-
