@@ -77,17 +77,18 @@ task.spawn(function()
                             end)
                         end
                     end
-                    task.spawn(function()
-                        local TrainingTemplate = {
-                            [1] = {
-                                [1] = "Reply",
-                                [2] = "0"
-                            }
-                        }
-                        
-                        Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-                    end)
                 end
+
+                task.spawn(function()
+                    local TrainingTemplate = {
+                        [1] = {
+                            [1] = "Reply",
+                            [2] = "0"
+                        }
+                    }
+                    
+                    Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                end)
             end
 
             task.wait(.5)
