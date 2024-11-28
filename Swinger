@@ -1,0 +1,96 @@
+if _G.Enabled then print("Executed Twice!") return end
+_G.Enabled = true
+
+if not _G.EXMulti then _G.EXMulti = 10 end
+if not _G.Multi then _G.Multi = 50 end
+if not _G.Time then _G.Time = .85 end
+
+local Players = cloneref(game:GetService("Players"))
+local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+local Player = Players.LocalPlayer
+
+local BufferStorage = {
+    ["SettingsBuffer"] = buffer.fromstring(""),
+    ["PurchaseBuffer"] = buffer.fromstring(""),
+    ["NPCBuffer"] = buffer.fromstring(""),
+    ["TrainingBuffer"] = buffer.fromstring(""),
+}
+
+local CorrectAnimation
+local AnimTimPos = 0
+local Reliable = ReplicatedStorage.Packages["_Index"]["imezx_warp@1.0.9"].warp.Index.Event.Reliable
+
+local function CheckAnimation()
+    for i,v in pairs(Player.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+        if v.Animation.AnimationId == "rbxassetid://18959775178" or v.Animation.AnimationId == "rbxassetid://134103570218892" or v.Animation.AnimationId == "rbxassetid://128853198998904" then
+            if v.IsPlaying == true then
+                return v
+            end
+        end
+    end
+    return false
+end
+
+task.spawn(function()
+    while task.wait() do
+        CorrectAnimation = CheckAnimation()
+        if CorrectAnimation then
+            AnimTimPos = (CorrectAnimation.TimePosition/CorrectAnimation.Length)
+        else
+            AnimTimPos = 0
+        end
+    end
+end)
+
+print("LOAD")
+
+local CurrentKey = nil
+task.spawn(function()
+    while task.wait() do
+        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and Player.PlayerGui.HUD.Trainings:FindFirstChild("Square") then
+            print("Start")
+            CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Keybind.Text
+
+            local TrainingTemplate = {
+                [1] = {
+                    [1] = "Reply",
+                    [2] = CurrentKey
+                }
+            }
+
+            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+
+            task.wait(.1)
+            repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0
+
+            local ExtraMulti = _G.EXMulti
+
+            if AnimTimPos == 0 then
+               print("Canceled?")
+            else
+                for i = 1, ExtraMulti do
+                    task.spawn(function()
+                        local CalcMulti = (_G.Multi/10)
+                        for i = 1, CalcMulti do
+                            if AnimTimPos <= .98 then
+                                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                            end
+                        end
+                    end)
+                    local TrainingTemplate = {
+                        [1] = {
+                            [1] = "Reply",
+                            [2] = "0"
+                        }
+                    }
+                    
+                    Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                end
+            end
+
+            task.wait(.5)
+        end
+    end
+end)
+
