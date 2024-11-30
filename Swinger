@@ -70,6 +70,8 @@ task.spawn(function()
 
             local ExtraMulti = _G.EXMulti
 
+            task.wait(_G.ExtraWait)
+
             for i = 1, ExtraMulti do
                 local CalcMulti = (_G.Multi/ExtraMulti)
                 for i = 1, CalcMulti do
