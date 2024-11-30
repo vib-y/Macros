@@ -4,6 +4,7 @@ _G.Enabled = true
 if not _G.EXMulti then _G.EXMulti = 10 end
 if not _G.Multi then _G.Multi = 50 end
 if not _G.Time then _G.Time = .85 end
+if not _G.ExtraWait then _G.ExtraWait = .1 end
 
 local Players = cloneref(game:GetService("Players"))
 local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
@@ -69,12 +70,12 @@ task.spawn(function()
 
             Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
 
-            task.wait(.1)
+            task.wait(_G.ExtraWait or .1)
             repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0 or TrainButton.Name == "Circle"
 
             local ExtraMulti = _G.EXMulti
 
-            if AnimTimPos == 0 then
+            if AnimTimPos == 0 and not TrainButton.Name == "Circle" then
                print("Canceled?")
             else
                 for i = 1, ExtraMulti do
@@ -104,4 +105,3 @@ task.spawn(function()
         end
     end
 end)
-
