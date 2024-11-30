@@ -16,13 +16,21 @@ local BufferStorage = {
     ["TrainingBuffer"] = buffer.fromstring(""),
 }
 
+local TrainingAnimations = {
+    "rbxassetid://18959775178",
+    "rbxassetid://134103570218892",
+    "rbxassetid://128853198998904",
+    "rbxassetid://87313787304904",
+    "rbxassetid://116519551380765",
+}
+
 local CorrectAnimation
 local AnimTimPos = 0
 local Reliable = ReplicatedStorage.Packages["_Index"]["imezx_warp@1.0.9"].warp.Index.Event.Reliable
-
+-- v.Animation.AnimationId == "rbxassetid://18959775178" or v.Animation.AnimationId == "rbxassetid://134103570218892" or v.Animation.AnimationId == "rbxassetid://128853198998904"
 local function CheckAnimation()
     for i,v in pairs(Player.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
-        if v.Animation.AnimationId == "rbxassetid://18959775178" or v.Animation.AnimationId == "rbxassetid://134103570218892" or v.Animation.AnimationId == "rbxassetid://128853198998904" then
+        if table.find(TrainingAnimations, v.Animation.AnimationId) then
             if v.IsPlaying == true then
                 return v
             end
@@ -47,9 +55,10 @@ print("LOAD")
 local CurrentKey = nil
 task.spawn(function()
     while task.wait() do
-        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and Player.PlayerGui.HUD.Trainings:FindFirstChild("Square") then
+        local TrainButton = Player.PlayerGui.HUD.Trainings:FindFirstChild("Square") or Player.PlayerGui.HUD.Trainings:FindFirstChild("Circle")
+        if #Player.PlayerGui.HUD.Trainings:GetChildren() == 2 and TrainButton then
             print("Start")
-            CurrentKey = Player.PlayerGui.HUD.Trainings.Square.Keybind.Text
+            CurrentKey = TrainButton.Keybind.Text
 
             local TrainingTemplate = {
                 [1] = {
@@ -61,7 +70,7 @@ task.spawn(function()
             Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
 
             task.wait(.1)
-            repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0
+            repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0 or TrainButton.Name == "Circle"
 
             local ExtraMulti = _G.EXMulti
 
@@ -95,3 +104,4 @@ task.spawn(function()
         end
     end
 end)
+
