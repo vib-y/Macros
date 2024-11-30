@@ -68,38 +68,29 @@ task.spawn(function()
                 }
             }
 
-            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-
-            task.wait(_G.ExtraWait or .1)
-            repeat task.wait() until AnimTimPos > _G.Time or AnimTimPos == 0 or TrainButton.Name == "Circle"
-
             local ExtraMulti = _G.EXMulti
 
-            if AnimTimPos == 0 and not TrainButton.Name == "Circle" then
-               print("Canceled?")
-            else
-                for i = 1, ExtraMulti do
-                    local CalcMulti = (_G.Multi/ExtraMulti)
-                    for i = 1, CalcMulti do
-                        if AnimTimPos <= .98 then
-                            task.spawn(function()
-                                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-                            end)
-                        end
+            for i = 1, ExtraMulti do
+                local CalcMulti = (_G.Multi/ExtraMulti)
+                for i = 1, CalcMulti do
+                    if AnimTimPos <= .98 then
+                        task.spawn(function()
+                            Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+                        end)
                     end
                 end
-
-                task.spawn(function()
-                    local TrainingTemplate = {
-                        [1] = {
-                            [1] = "Reply",
-                            [2] = "0"
-                        }
-                    }
-                    
-                    Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
-                end)
             end
+
+            task.spawn(function()
+                local TrainingTemplate = {
+                    [1] = {
+                        [1] = "Reply",
+                        [2] = "0"
+                    }
+                }
+                
+                Reliable:FireServer(BufferStorage["TrainingBuffer"], TrainingTemplate)
+            end)
 
             task.wait(1.5)
         end
