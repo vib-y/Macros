@@ -1,0 +1,41 @@
+-- SETTINGS
+local SELL_DELAY = 0.1; -- Pretty sure it's capped at 0.1 on the server
+
+-- Services
+local Players = game:GetService("Players");
+local ReplicatedStorage = game:GetService("ReplicatedStorage");
+local RunService = game:GetService("RunService");
+
+-- Variables
+local LocalPlayer = Players.LocalPlayer;
+local Sold = tick();
+
+-- Main
+do
+    RunService.RenderStepped:Connect(function()
+        if (tick() - Sold < SELLDELAY) then
+            return;
+        end
+
+        for , Player in Players:GetChildren() do
+            local Character = Player.Character;
+
+            if (Player == LocalPlayer) or (not Character) then
+                continue;
+            end
+
+            for _, Tool in Character:GetDescendants() do
+                if (Tool.ClassName ~= "Tool") then
+                    continue;
+                end
+
+                ReplicatedStorage.GameEvents.SellPet_RE:FireServer(Tool);
+                Sold = tick();
+            end
+        end
+    end)
+end
+
+-- written by dementia enjoyer
+-- thanks to @relixend aswell for some extra info
+-- shoutout to solix hub, best gag script !!!
