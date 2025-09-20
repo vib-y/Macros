@@ -27,7 +27,7 @@ end
 
 if ServerType ~= "ReservedServer" then
     if not table.find(Team, Player.Name) then
-         --task.wait(15)
+         task.wait(15)
     else
         task.wait(5)
     end
@@ -113,3 +113,4 @@ while task.wait(.3) do
         end
     end
 end
+
