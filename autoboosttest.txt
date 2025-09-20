@@ -29,7 +29,7 @@ end
 
 if ServerType ~= "ReservedServer" then
     if not table.find(Team, Player.Name) then
-         task.wait(15)
+         task.wait(35)
     else
         task.wait(5)
     end
@@ -76,12 +76,12 @@ Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Upt
     local FalseTime = Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading.Text
     local numbersOnly = string.gsub(FalseTime, "%D", "")
     CurrentTime = tonumber(numbersOnly)
-    if ReplicatedStorage.ServerShutdown.Value == true or tonumber(numbersOnly) > 945 then
+    if ReplicatedStorage.ServerShutdown.Value == true or tonumber(numbersOnly) > 925 then
         if not table.find(Team, Player.Name) then
             Player:Kick("Rejoining TimeMAXED")
             TeleportService:Teleport(PlaceId)
         else
-            task.wait(15)
+            task.wait(35)
             Player:Kick("Rejoining TimeMAXED")
             TeleportService:Teleport(PlaceId)
         end
@@ -100,7 +100,7 @@ while task.wait(.3) do
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,-1.1) * CFrame.Angles(0, math.rad(180), 0)
                 -- CFrame.new(0,-3.5,-1.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim -- CFrame.new(0,-3.5,12.5) LAY
                 task.wait(.15)
-                for i = 1, 15 do
+                for i = 1, 18 do
                     --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
                     ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
                 end
