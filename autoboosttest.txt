@@ -27,7 +27,7 @@ end
 
 if ServerType ~= "ReservedServer" then
     if not table.find(Team, Player.Name) then
-         task.wait(15)
+         --task.wait(15)
     else
         task.wait(5)
     end
@@ -45,11 +45,9 @@ local Court = workspace.Twos["Court 6"]
 local function CheckQueue(PlayerName)
     for i,v in pairs(Court.teams.queued:GetChildren()) do
         if v.Value == PlayerName then
-            print("Queued")
             return true
         end
     end
-    print("Not Queued")
     return false
 end
 
@@ -72,8 +70,6 @@ local function JoinMatch()
     end
 end
 
-JoinMatch()
-
 Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading:GetPropertyChangedSignal("Text"):Connect(function()
     local FalseTime = Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading.Text
     local numbersOnly = string.gsub(FalseTime, "%D", "")
@@ -94,7 +90,7 @@ while task.wait(.3) do
         JoinMatch()
         --print("Joining Match")
     elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
-        if Player.Backpack.PlayerValues.HandValue.Value == "HoldingBall" and table.find(Team, Player.Name) and not Player.Name == Team[3]  then
+        if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
             if Player.Name == Team[1] then
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Handoff") -- Overhead
             elseif Player.Name == Team[2] then
@@ -106,11 +102,10 @@ while task.wait(.3) do
                 end
                 ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
             end
-        elseif Player.Backpack.PlayerValues.HandValue.Value == "HoldingBall" and not table.find(Team, Player.Name) then
+        elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team, Player.Name) then
             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Handoff")
         elseif not table.find(Team, Player.Name) then
             Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-20)
         end
     end
 end
-
