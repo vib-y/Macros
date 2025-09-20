@@ -1,0 +1,115 @@
+repeat task.wait() until game:IsLoaded()
+task.wait(2)
+-- working booster
+local Team = {
+    "Eyeleventh",
+    "getsbands"
+}
+
+local Task = "Shooting"
+local State = "Inactive"
+local PlaceId = 8026790371
+
+local Players = game:GetService("Players")
+local RobloxReplicatedStorage = game:GetService("RobloxReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TeleportService = game:GetService("TeleportService")
+local Player = Players.LocalPlayer
+
+local ServerType = RobloxReplicatedStorage.GetServerType:InvokeServer()
+print("Ran")
+
+--game:GetService("TeleportService"):Teleport(8026790371)
+if game.PlaceId ~= PlaceId then
+    TeleportService:Teleport(PlaceId)
+    return
+end
+
+if ServerType ~= "ReservedServer" then
+    if not table.find(Team, Player.Name) then
+         --task.wait(15)
+    else
+        task.wait(5)
+    end
+    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+    return
+else
+    Player.PlayerGui["Loading.Ui"].Enabled = false
+    Player.PlayerGui["ServerInfo.Ui"].Enabled = true
+    Player.Character.HumanoidRootPart.CFrame = workspace.Detectors.Gameplay.Plaza.CFrame
+    print("Load")
+end
+
+local Court = workspace.Twos["Court 6"]
+
+local function CheckQueue(PlayerName)
+    for i,v in pairs(Court.teams.queued:GetChildren()) do
+        if v.Value == PlayerName then
+            print("Queued")
+            return true
+        end
+    end
+    print("Not Queued")
+    return false
+end
+
+local function JoinMatch()
+    if table.find(Team, Player.Name) and Player.Name ~= Team[3] then
+
+        Player.Character.PrimaryPart.CFrame = Court.pads.team1.join.CFrame
+        task.wait(.5)
+        if Player.Name ~= Team[1] then
+            repeat task.wait(1) until Court.teams.queued.team1queued1.Value ~= ""
+            ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team1.join, "team1")
+        else
+            ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team1.join, "team1")
+        end
+    else
+        repeat task.wait(1) until Court.teams.queued.team1queued2.Value ~= ""
+        Player.Character.PrimaryPart.CFrame = Court.pads.team2.join.CFrame
+        task.wait(.5)
+        ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team2.join, "team2")
+    end
+end
+
+JoinMatch()
+
+Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading:GetPropertyChangedSignal("Text"):Connect(function()
+    local FalseTime = Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading.Text
+    local numbersOnly = string.gsub(FalseTime, "%D", "")
+    if ReplicatedStorage.ServerShutdown.Value == true or tonumber(numbersOnly) > 945 then
+        if not table.find(Team, Player.Name) then
+            Player:Kick("Rejoining TimeMAXED")
+            TeleportService:Teleport(PlaceId)
+        else
+            task.wait(15)
+            Player:Kick("Rejoining TimeMAXED")
+            TeleportService:Teleport(PlaceId)
+        end
+    end
+end)
+
+while task.wait(.3) do
+    if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
+        JoinMatch()
+        --print("Joining Match")
+    elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
+        if Player.Backpack.PlayerValues.HandValue.Value == "HoldingBall" and table.find(Team, Player.Name) and not Player.Name == Team[3]  then
+            if Player.Name == Team[1] then
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Handoff") -- Overhead
+            elseif Player.Name == Team[2] then
+                Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,12.5) * CFrame.Angles(0, math.rad(180), 0)
+                -- CFrame.new(0,-3.5,-1.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim
+                task.wait(.15)
+                for i = 1, 15 do
+                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
+                end
+                ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
+            end
+        elseif Player.Backpack.PlayerValues.HandValue.Value == "HoldingBall" and not table.find(Team, Player.Name) then
+            ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Handoff")
+        elseif not table.find(Team, Player.Name) then
+            Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-20)
+        end
+    end
+end
