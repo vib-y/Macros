@@ -32,7 +32,7 @@ end
 
 if ServerType ~= "ReservedServer" then
     if not table.find(Team, Player.Name) then
-         task.wait(35)
+         task.wait(34)
     else
         task.wait(5)
     end
@@ -110,7 +110,7 @@ while task.wait(.3) do
         if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
             if Player.Name == Team[1] then
                 --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
-                --task.wait(.175)
+                task.wait(.175)
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Handoff") -- Overhead
             elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,-2.4) --* CFrame.Angles(0, math.rad(180), 0)
@@ -123,6 +123,7 @@ while task.wait(.3) do
                 --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
                 ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
             elseif Player.Name == Team[2] and State == 1 and SecondPass == true then
+                task.wait(.175)
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Handoff") -- Overhead
                 State = 2
             end
