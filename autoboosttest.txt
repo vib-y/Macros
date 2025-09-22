@@ -1,6 +1,6 @@
 --// Regular working booster
 repeat task.wait() until game:IsLoaded()
-task.wait(2)
+task.wait(3)
 
 local Team = {
     "getsbands",
@@ -43,6 +43,10 @@ else
     Player.PlayerGui["ServerInfo.Ui"].Enabled = true
     Player.Character.HumanoidRootPart.CFrame = workspace.Detectors.Gameplay.Plaza.CFrame
     print("Load")
+
+    if ReplicatedStorage.ServerShutdown.Value == true then
+        TeleportService:Teleport(PlaceId) -- Special Case
+    end
 end
 
 local Court = workspace.Twos["Court 6"]
@@ -88,6 +92,13 @@ Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Upt
             Player:Kick("Rejoining TimeMAXED")
             TeleportService:Teleport(PlaceId)
         end
+    end
+end)
+
+ReplicatedStorage.ServerShutdown:GetPropertyChangedSignal("Value"):Connect(function()
+    if ReplicatedStorage.ServerShutdown.Value == true then
+        Player:Kick("Rejoining TimeMAXED")
+        TeleportService:Teleport(PlaceId) -- Special Case
     end
 end)
 
