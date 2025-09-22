@@ -113,7 +113,7 @@ while task.wait(.3) do
                 if not SecondPass then
                     task.wait(.175)
                 end
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Handoff") -- Overhead
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest") -- Overhead
             elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,-2.4) --* CFrame.Angles(0, math.rad(180), 0)
                 -- CFrame.new(0,-3.5,-1.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim -- CFrame.new(0,-3.5,12.5) LAY
@@ -126,7 +126,7 @@ while task.wait(.3) do
                 ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
             elseif Player.Name == Team[2] and State == 1 and SecondPass == true then
                 task.wait(.175)
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Handoff") -- Overhead
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest") -- Overhead
                 State = 2
             end
         elseif Player.Name == HighestPosition then
@@ -136,9 +136,10 @@ while task.wait(.3) do
             end
         elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team, Player.Name) then
             if SecondPass then
-                task.wait(.175)
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest")
+            else
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest")
             end
-            ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Handoff")
         elseif not table.find(Team, Player.Name) then
             Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-20)
         end
