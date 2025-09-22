@@ -110,9 +110,7 @@ while task.wait(.3) do
         if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
             if Player.Name == Team[1] then
                 --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
-                if not SecondPass then
-                    task.wait(.175)
-                end
+                task.wait(.175)
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest") -- Overhead
             elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,-2.4) --* CFrame.Angles(0, math.rad(180), 0)
