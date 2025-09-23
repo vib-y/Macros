@@ -151,7 +151,7 @@ while task.wait(.3) do
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest")
             end
         elseif not table.find(Team, Player.Name) then
-            Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-20)
+            Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-22)
         end
     end
 end
