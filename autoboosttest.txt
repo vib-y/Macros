@@ -1,14 +1,39 @@
 --// Regular working booster
 repeat task.wait() until game:IsLoaded()
-setfpscap(24)
+setfpscap(15)
 task.wait(3)
 
 local Team = {
+    "thejustas",
+    "standsonlinemar"
+}
+
+local FullTeam = {
+    "thejustas",
+    "standsonlinemar",
+
+    "Evil_LittleLizard",
+    "TeamKengunAssets"
+}
+
+local Team2 = {
     "getsbands",
-    "Eyeleventh"
+    "Eyeleventh",
+    "4erify"
+}
+
+local FullTeam2 = {
+    "getsbands",
+    "Eyeleventh",
+    "4erify",
+
+    "WingsOfDoomB",
+    "FluwuffyVibe",
+    "WingsOfDoomC"
 }
 
 local SecondPass = true
+local TenPlayers = true
 local HighestPosition = Team[1]
 
 local Task = "Shooting"
@@ -33,7 +58,7 @@ end
 
 if ServerType ~= "ReservedServer" then
     if not table.find(Team, Player.Name) then
-         task.wait(34)
+        task.wait(34)
     else
         task.wait(5)
     end
@@ -45,12 +70,24 @@ else
     Player.Character.HumanoidRootPart.CFrame = workspace.Detectors.Gameplay.Plaza.CFrame
     print("Load")
 
+    if workspace.Map:FindFirstChild("Scenery") then
+        workspace.Map.Scenery:Destroy()
+    end
+
     if ReplicatedStorage.ServerShutdown.Value == true then
         TeleportService:Teleport(PlaceId) -- Special Case
     end
 end
 
-local Court = workspace.Twos["Court 6"]
+local Court --= workspace.Twos["Court 6"]
+
+if table.find(FullTeam, Player.Name) then
+    Court = workspace.Twos["Court 6"]
+elseif table.find(FullTeam2, Player.Name) then
+    Court = workspace.Threes["Court 4"]
+else
+    return
+end
 
 local function CheckQueue(PlayerName)
     for i,v in pairs(Court.teams.queued:GetChildren()) do
@@ -62,7 +99,7 @@ local function CheckQueue(PlayerName)
 end
 
 local function JoinMatch()
-    if table.find(Team, Player.Name) and CurrentTime < 900 then
+    if table.find(Team, Player.Name) and (CurrentTime < 900 or TenPlayers) then
 
         Player.Character.PrimaryPart.CFrame = Court.pads.team1.join.CFrame
         task.wait(.5)
@@ -84,7 +121,7 @@ Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Upt
     local FalseTime = Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading.Text
     local numbersOnly = string.gsub(FalseTime, "%D", "")
     CurrentTime = tonumber(numbersOnly)
-    if ReplicatedStorage.ServerShutdown.Value == true or tonumber(numbersOnly) > 900 then
+    if ReplicatedStorage.ServerShutdown.Value == true or (tonumber(numbersOnly) > 900 and not TenPlayers) then
         if not table.find(Team, Player.Name) then
             Player:Kick("Rejoining TimeMAXED")
             TeleportService:Teleport(PlaceId)
@@ -114,44 +151,85 @@ Court.values.Pause:GetPropertyChangedSignal("Value"):Connect(function()
     end
 end)
 
-while task.wait(.3) do
-    if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
-        JoinMatch()
-        --print("Joining Match")
-    elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
-        if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
-            if Player.Name == Team[1] then
-                --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
-                task.wait(.2)
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest") -- Overhead
-            elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
-                Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,12.5) * CFrame.Angles(0, math.rad(180), 0)
-                -- CFrame.new(0,-3.5,-1.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim -- CFrame.new(0,-3.5,12.5) LAY
-                task.wait(.175)
-                for i = 1, 15 do
-                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
-                    --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
+if table.find(FullTeam, Player.Name) then
+    while task.wait(.3) do
+        if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
+            JoinMatch()
+            --print("Joining Match")
+        elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
+            if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
+                if Player.Name == Team[1] then
+                    --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
+                    task.wait(.2)
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest") -- Overhead
+                elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
+                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,12.5) * CFrame.Angles(0, math.rad(180), 0)
+                    -- CFrame.new(0,-3.5,-1.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim -- CFrame.new(0,-3.5,12.5) LAY
+                    task.wait(.175)
+                    for i = 1, 15 do
+                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
+                        --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
+                    end
+                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
+                    --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
+                elseif Player.Name == Team[2] and State == 1 and SecondPass == true then
+                    task.wait(.25)
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest") -- Overhead
+                    State = 2
                 end
-                ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
-                --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
-            elseif Player.Name == Team[2] and State == 1 and SecondPass == true then
-                task.wait(.25)
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest") -- Overhead
-                State = 2
+            elseif Player.Name == HighestPosition then
+                local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
+                if Distance > 7 then
+                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,2)
+                end
+            elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team, Player.Name) then
+                if SecondPass then
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest")
+                else
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest")
+                end
+            elseif not table.find(Team, Player.Name) then
+                Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-22)
             end
-        elseif Player.Name == HighestPosition then
-            local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
-            if Distance > 7 then
-                Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,2)
+        end
+    end
+elseif table.find(FullTeam2, Player.Name) then
+    while task.wait(.3) do
+        if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
+            JoinMatch()
+            --print("Joining Match")
+        elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
+            if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value >= 2 then
+                if Player.Name == Team2[1] then
+                    task.wait(.2)
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
+                elseif Player.Name == Team2[2]  then
+                    task.wait(.2)
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[3]].Character, "Chest") 
+                elseif Player.Name == Team2[3] then
+                    task.wait(.2)
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
+                end
+            elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 2 then
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
+            elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
+                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
+            elseif table.find(Team2, Player.Name) then
+                Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)]
+            elseif not table.find(Team2, Player.Name) then
+                Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
+                if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
+                    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                end
             end
-        elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team, Player.Name) then
-            if SecondPass then
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest")
-            else
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest")
+        elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" then
+            if Court.values.Calls.Calls2.Value == "Team1" and Player.Name == Team2[1] then
+                Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame
+            elseif Court.values.Calls.Calls2.Value == "Team2" and Player.Name == FullTeam2[4] then
+                Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame
             end
-        elseif not table.find(Team, Player.Name) then
-            Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-22)
         end
     end
 end
+
+
