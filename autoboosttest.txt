@@ -263,12 +263,16 @@ elseif table.find(FullTeam2, Player.Name) then
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" then
             if Court.values.Calls.Calls2.Value == "Team1" and Player.Name == Team2[1] then
                 Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame * CFrame.new(0,3,0)
-                task.wait(2.5)
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
+                task.wait(3)
+                if Player.Character:FindFirstChild("BallConnect") then
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
+                end
             elseif Court.values.Calls.Calls2.Value == "Team2" and Player.Name == FullTeam2[4] then
                 Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame * CFrame.new(0,3,0)
-                task.wait(2.5)
-                ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
+                task.wait(3)
+                if Player.Character:FindFirstChild("BallConnect") then
+                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
+                end
             end
         end
     end
