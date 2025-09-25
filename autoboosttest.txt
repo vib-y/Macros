@@ -261,8 +261,10 @@ elseif table.find(FullTeam2, Player.Name) then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
 
                         if Player.Name == FullTeam2[6] then
-                            task.wait(2)
+                            task.wait(3)
                         end
+                        setfpscap(30)
+                        TeleportService:Teleport(PlaceId)
                     end
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
@@ -289,7 +291,7 @@ elseif table.find(FullTeam2, Player.Name) then
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
                 if not table.find(Team2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
-                        task.wait(4)
+                        task.wait(3)
                     end
                     setfpscap(30)
                     TeleportService:Teleport(PlaceId)
