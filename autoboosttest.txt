@@ -249,12 +249,13 @@ elseif table.find(FullTeam2, Player.Name) then
                 end
             elseif not table.find(Team2, Player.Name) then
                 if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
-                    task.wait(math.random(1,5))
+                    task.wait(table.find(FullTeam2, Player.Name)-4 * 3.5)
                     RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
                 end
 
                 local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                 if Distance > 10 then
+                    task.wait(.5)
                     Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
                     task.wait(1)
                 end
