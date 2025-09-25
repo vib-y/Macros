@@ -80,7 +80,7 @@ else
         workspace.Map.Scenery:Destroy()
     end
 
-    if ReplicatedStorage.ServerShutdown.Value == true and GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick then
+    if ReplicatedStorage.ServerShutdown.Value == true and (GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick or GuiService:GetErrorCode() == Enum.ConnectionError.TeleportFailure) then
         TeleportService:Teleport(PlaceId) -- Special Case
         return
     end
