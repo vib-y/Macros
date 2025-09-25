@@ -233,6 +233,8 @@ elseif table.find(FullTeam2, Player.Name) then
                     elseif Player.Name == Team2[3] then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                     end
+                else
+                    ReplicatedStorage.PlayerEvents.Dribbling:FireServer("DropBall")
                 end
             elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value < 3 then
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
