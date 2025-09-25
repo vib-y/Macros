@@ -80,12 +80,13 @@ else
         workspace.Map.Scenery:Destroy()
     end
 
-    setfpscap(15)
-
     if ReplicatedStorage.ServerShutdown.Value == true and GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick then
         TeleportService:Teleport(PlaceId) -- Special Case
+        return
     end
 end
+
+setfpscap(15)
 
 local Court --= workspace.Twos["Court 6"]
 
@@ -290,6 +291,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
                         task.wait(4)
                     end
+                    setfpscap(30)
                     TeleportService:Teleport(PlaceId)
                 end
             end
