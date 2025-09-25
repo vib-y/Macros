@@ -235,7 +235,7 @@ elseif table.find(FullTeam2, Player.Name) then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
                     else
-                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB2.CFrame * CFrame.new(0,3,0)
+                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB2.CFrame * CFrame.new(0,5,0)
                         task.wait(2)
                     end
                 elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value < 3 then
@@ -248,6 +248,8 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
+                    else
+                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(0,5,0)
                     end
                 elseif table.find(Team2, Player.Name) then
                     local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
@@ -258,7 +260,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                 elseif not table.find(Team2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
-                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(0,3,0)
+                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(0,5,0)
                         task.wait(2)
                         if Player.Name == FullTeam2[6] then
                             task.wait(14)
