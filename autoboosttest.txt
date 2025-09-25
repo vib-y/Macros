@@ -86,8 +86,6 @@ else
     end
 end
 
-setfpscap(15)
-
 local Court --= workspace.Twos["Court 6"]
 
 if table.find(FullTeam, Player.Name) then
@@ -263,7 +261,6 @@ elseif table.find(FullTeam2, Player.Name) then
                         if Player.Name == FullTeam2[6] then
                             task.wait(3)
                         end
-                        setfpscap(30)
                         TeleportService:Teleport(PlaceId)
                     end
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
@@ -293,7 +290,6 @@ elseif table.find(FullTeam2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
                         task.wait(3)
                     end
-                    setfpscap(30)
                     TeleportService:Teleport(PlaceId)
                 end
             end
