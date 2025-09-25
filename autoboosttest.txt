@@ -62,6 +62,11 @@ Players.LocalPlayer.Idled:Connect(function()
 	VirtualUser:ClickButton2(Vector2.new())
 end)
 
+GuiService.ErrorMessageChanged:Connect(function()
+    Player:Kick("Rejoining ERROR MESSAGE")
+    TeleportService:Teleport(PlaceId)
+end)
+
 if ServerType ~= "ReservedServer" then
     if table.find(Team, Player.Name) or table.find(Team2, Player.Name) or TenPlayers then
         task.wait(5)
@@ -161,11 +166,10 @@ end)
 
 ReplicatedStorage.ServerShutdown:GetPropertyChangedSignal("Value"):Connect(function()
     if ReplicatedStorage.ServerShutdown.Value == true then
-        Player:Kick("Rejoining TimeMAXED")
+        Player:Kick("Rejoining SERVERSHUTDOWN")
         TeleportService:Teleport(PlaceId) -- Special Case
     end
 end)
-
 
 local Prevvalue = false
 Court.values.Pause:GetPropertyChangedSignal("Value"):Connect(function()
