@@ -73,7 +73,13 @@ if ServerType ~= "ReservedServer" then
     else
         task.wait(35)
     end
-    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+
+    if GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick or GuiService:GetErrorCode() == Enum.ConnectionError.TeleportFailure then
+        Player:Kick("Joined NEPSERVERS")
+        TeleportService:Teleport(PlaceId)
+    else
+         RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+    end
     return
 else
     Player.PlayerGui["Loading.Ui"].Enabled = false
