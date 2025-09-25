@@ -44,6 +44,7 @@ local Players = game:GetService("Players")
 local RobloxReplicatedStorage = game:GetService("RobloxReplicatedStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TeleportService = game:GetService("TeleportService")
+local GuiService = game:GetService("GuiService")
 local Player = Players.LocalPlayer
 local CurrentTime = 0
 
@@ -80,7 +81,7 @@ else
         workspace.Map.Scenery:Destroy()
     end
 
-    if ReplicatedStorage.ServerShutdown.Value == true and not TenPlayers then
+    if ReplicatedStorage.ServerShutdown.Value == true and GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick then
         TeleportService:Teleport(PlaceId) -- Special Case
     end
 end
@@ -273,7 +274,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     task.wait(3)
                     if Player.Character:FindFirstChild("BallConnect") then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
-                        task.wait(.25)
+                        task.wait(.75)
                         Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)].CFrame
                     end
                 elseif Court.values.Calls.Calls2.Value == "Team2" and Player.Name == FullTeam2[4] then
@@ -288,7 +289,9 @@ elseif table.find(FullTeam2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
                         task.wait(8)
                     end
-                    TeleportService:Teleport(PlaceId)
+                    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                    task.wait()
+                    Player:Kick("Rejoining")
                 end
             end
         end)
