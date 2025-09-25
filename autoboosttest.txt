@@ -32,7 +32,7 @@ local FullTeam2 = {
     "WingsOfDoomC"
 }
 
-local SecondPass = true
+local SecondPass = false
 local TenPlayers = true
 local HighestPosition = Team[1]
 
@@ -57,7 +57,7 @@ if game.PlaceId ~= PlaceId then
 end
 
 if ServerType ~= "ReservedServer" then
-    if not table.find(Team, Player.Name) then
+    if not table.find(Team, Player.Name) or not table.find(Team2, Player.Name) then
         task.wait(34)
     else
         task.wait(5)
@@ -111,6 +111,25 @@ local function JoinMatch()
         end
     else
         repeat task.wait(1) until Court.teams.queued.team1queued2.Value ~= ""
+        Player.Character.PrimaryPart.CFrame = Court.pads.team2.join.CFrame
+        task.wait(.5)
+        ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team2.join, "team2")
+    end
+end
+
+local function JoinMatchThrees()
+    if table.find(Team2, Player.Name) and (CurrentTime < 900 or TenPlayers) then
+
+        Player.Character.PrimaryPart.CFrame = Court.pads.team1.join.CFrame
+        task.wait(.5)
+        if Player.Name ~= Team[1] then
+            repeat task.wait(1) until Court.teams.queued.team1queued1.Value ~= ""
+            ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team1.join, "team1")
+        else
+            ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team1.join, "team1")
+        end
+    else
+        repeat task.wait(1) until Court.teams.queued.team1queued3.Value ~= ""
         Player.Character.PrimaryPart.CFrame = Court.pads.team2.join.CFrame
         task.wait(.5)
         ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team2.join, "team2")
@@ -196,7 +215,7 @@ if table.find(FullTeam, Player.Name) then
 elseif table.find(FullTeam2, Player.Name) then
     while task.wait(.3) do
         if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
-            JoinMatch()
+            JoinMatchThrees()
             --print("Joining Match")
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
             if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value >= 2 then
