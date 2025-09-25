@@ -1,6 +1,5 @@
 --// Regular working booster
 repeat task.wait() until game:IsLoaded()
-setfpscap(15)
 task.wait(3)
 
 local Team = {
@@ -80,6 +79,8 @@ else
     if workspace.Map:FindFirstChild("Scenery") then
         workspace.Map.Scenery:Destroy()
     end
+
+    setfpscap(15)
 
     if ReplicatedStorage.ServerShutdown.Value == true and GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick then
         TeleportService:Teleport(PlaceId) -- Special Case
