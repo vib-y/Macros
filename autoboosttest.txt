@@ -240,7 +240,7 @@ elseif table.find(FullTeam2, Player.Name) then
             elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
             elseif table.find(Team2, Player.Name) then
-                Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)]
+                Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)].CFrame
             elseif not table.find(Team2, Player.Name) then
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
                 if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
