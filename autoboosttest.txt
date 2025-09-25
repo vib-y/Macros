@@ -149,7 +149,7 @@ Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Upt
     local FalseTime = Player.PlayerGui["ServerInfo.Ui"].TopBarFrame.Holder.ServerInfo.UptimeBubble.Uptime.Heading.Text
     local numbersOnly = string.gsub(FalseTime, "%D", "")
     CurrentTime = tonumber(numbersOnly)
-    if ReplicatedStorage.ServerShutdown.Value == true or (tonumber(numbersOnly) > 900 and not TenPlayers) then
+    if (ReplicatedStorage.ServerShutdown.Value == true and GuiService:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick) or (tonumber(numbersOnly) > 900 and not TenPlayers) then
         if not table.find(Team, Player.Name) then
             Player:Kick("Rejoining TimeMAXED")
             TeleportService:Teleport(PlaceId)
