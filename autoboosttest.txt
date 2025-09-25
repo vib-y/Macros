@@ -80,7 +80,7 @@ else
         workspace.Map.Scenery:Destroy()
     end
 
-    if ReplicatedStorage.ServerShutdown.Value == true then
+    if ReplicatedStorage.ServerShutdown.Value == true and not TenPlayers then
         TeleportService:Teleport(PlaceId) -- Special Case
     end
 end
@@ -284,6 +284,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                 end
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
+                print("Match")
                 if not table.find(Team2, Player.Name) then
                     if Court.values.Calls.Calls2.Value == "Team1" then
                         RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
