@@ -225,15 +225,17 @@ elseif table.find(FullTeam2, Player.Name) then
             --print("Joining Match")
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
             if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value >= 2 then
-                if Player.Name == Team2[1] then
-                    task.wait(.3)
-                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
-                elseif Player.Name == Team2[2]  then
-                    task.wait(.3)
-                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[3]].Character, "Chest") 
-                elseif Player.Name == Team2[3] then
-                    task.wait(.3)
-                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
+                if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
+                    if Player.Name == Team2[1] then
+                        task.wait(.15)
+                        ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Chest") 
+                    elseif Player.Name == Team2[2]  then
+                        task.wait(.15)
+                        ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[3]].Character, "Chest") 
+                    elseif Player.Name == Team2[3] then
+                        task.wait(.15)
+                        ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
+                    end
                 end
             elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 2 then
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
@@ -253,6 +255,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                 if Distance > 10 then
                     Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
+                    task.wait(1)
                 end
             end
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" then
