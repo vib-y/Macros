@@ -56,11 +56,17 @@ if game.PlaceId ~= PlaceId then
     return
 end
 
+local VirtualUser = cloneref(game:GetService("VirtualUser"))
+Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+	VirtualUser:ClickButton2(Vector2.new())
+end)
+
 if ServerType ~= "ReservedServer" then
-    if not table.find(Team, Player.Name) or not table.find(Team2, Player.Name) then
-        task.wait(34)
-    else
+    if table.find(Team, Player.Name) or table.find(Team2, Player.Name) then
         task.wait(5)
+    else
+        task.wait(35)
     end
     RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
     return
@@ -122,7 +128,7 @@ local function JoinMatchThrees()
 
         Player.Character.PrimaryPart.CFrame = Court.pads.team1.join.CFrame
         task.wait(.5)
-        if Player.Name ~= Team[1] then
+        if Player.Name ~= Team2[1] then
             repeat task.wait(1) until Court.teams.queued.team1queued1.Value ~= ""
             ReplicatedStorage.action:InvokeServer("join:solo", Court.pads.team1.join, "team1")
         else
