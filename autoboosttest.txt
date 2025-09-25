@@ -234,12 +234,6 @@ elseif table.find(FullTeam2, Player.Name) then
                         elseif Player.Name == Team2[3] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
-                    else
-                        for i = 1, 18 do -- 15 LAY | 18 THREE
-                            ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
-                        end
-                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
-                        task.wait(2)
                     end
                 elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value < 3 then
                     ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
@@ -251,11 +245,6 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
-                    else
-                        for i = 1, 18 do -- 15 LAY | 18 THREE
-                            ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
-                        end
-                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
                     end
                 elseif table.find(Team2, Player.Name) then
                     local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
@@ -271,8 +260,10 @@ elseif table.find(FullTeam2, Player.Name) then
                         if Player.Name == FullTeam2[6] then
                             task.wait(14)
                         end
-
-                        RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                        
+                        if Court.values.Calls.Calls2.Value == "Team1" then
+                            RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                        end
                     end
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
