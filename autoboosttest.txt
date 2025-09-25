@@ -237,6 +237,12 @@ elseif table.find(FullTeam2, Player.Name) then
             elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value < 3 then
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
             elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
+                local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
+                if Distance > 10 then
+                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
+                    task.wait(.5)
+                end
+
                 ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
             elseif table.find(Team2, Player.Name) then
                 local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
@@ -246,15 +252,10 @@ elseif table.find(FullTeam2, Player.Name) then
                 end
             elseif not table.find(Team2, Player.Name) then
                 if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
-                    task.wait((table.find(FullTeam2, Player.Name)-4) * 4.5)
+                    if Player.Name == FullTeam2[6] then
+                        task.wait(14)
+                    end
                     RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
-                end
-
-                local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
-                if Distance > 10 then
-                    task.wait(.5)
-                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
-                    task.wait(1)
                 end
             end
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" then
