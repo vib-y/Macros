@@ -252,9 +252,9 @@ elseif table.find(FullTeam2, Player.Name) then
                 elseif table.find(Team2, Player.Name) then
                     local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
                     if Distance > 15 then
-                        task.wait(.5)
+                        task.wait(1)
                         Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)].CFrame
-                        task.wait(.2)
+                        task.wait(.5)
                     end
                 elseif not table.find(Team2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
