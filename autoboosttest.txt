@@ -256,7 +256,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                 elseif not table.find(Team2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
-                        Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
+                        --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
 
                         if Player.Name == FullTeam2[6] then
                             task.wait(2)
@@ -284,14 +284,12 @@ elseif table.find(FullTeam2, Player.Name) then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
                     end
                 end
-            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
+            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
                 if not table.find(Team2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
-                        task.wait(8)
+                        task.wait(4)
                     end
-                    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
-                    task.wait()
-                    Player:Kick("Rejoining")
+                    TeleportService:Teleport(PlaceId)
                 end
             end
         end)
