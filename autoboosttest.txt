@@ -255,7 +255,14 @@ elseif table.find(FullTeam2, Player.Name) then
                     if Player.Name == FullTeam2[6] then
                         task.wait(14)
                     end
-                    RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+
+                    if not Player.Character:FindFirstChild("BallConnect") then
+                        RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                    else
+                        ReplicatedStorage.PlayerEvents.Dribbling:FireServer("DropBall")
+                        task.wait(2.5)
+                        RobloxReplicatedStorage.ContactListIrisInviteTeleport:FireServer(game.PlaceId,"","usm3Vj28dWWsv0OkEZMO996k07rpx05ep+yUOoCNecXjGW/eAQAAAA2")
+                    end
                 end
             end
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" then
