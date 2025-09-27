@@ -262,7 +262,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 JoinMatchThrees()
                 --print("Joining Match")
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
-                if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value > 1 then
+                if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value > 2 then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
                         if Player.Name == Team2[1] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Handoff") 
@@ -272,9 +272,11 @@ elseif table.find(FullTeam2, Player.Name) then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
                     end
-                elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 1 then
+                elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 2 then
                     --ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
                     --ReplicatedStorage.PlayerEvents.Dribbling:FireServer("DropBall")
+                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,15)
+                    task.wait(.175)
                     for i = 1, 18 do
                         --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
                         ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
@@ -349,4 +351,3 @@ elseif table.find(FullTeam2, Player.Name) then
         end
     end
 end
-
