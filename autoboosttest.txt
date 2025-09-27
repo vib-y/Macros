@@ -214,9 +214,9 @@ end
 
 function is_in_window(hhmmss)
     local total_seconds = hhmmss_to_seconds(hhmmss)
-    local interval = 570 -- 9m35s
+    local interval = 560 -- 9m30s
     local offset = total_seconds % interval
-    return offset >= 0 and offset <= 30
+    return offset >= 0 and offset <= 40
 end
 
 --workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
@@ -358,4 +358,3 @@ elseif table.find(FullTeam2, Player.Name) then
         end
     end
 end
-
