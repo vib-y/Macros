@@ -119,6 +119,11 @@ local function CheckQueue(PlayerName)
             return true
         end
     end
+    for i,v in pairs(Court.streak:GetChildren()) do
+        if v.Value == PlayerName then
+            return true
+        end
+    end
     return false
 end
 
