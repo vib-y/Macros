@@ -293,7 +293,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
 
-                        if not is_between(CurrentTime, 950, 1010) then
+                        if not is_between(CurrentTime, 935, 1000) then
                             TeleportService:Teleport(PlaceId)
                         end
                     end
