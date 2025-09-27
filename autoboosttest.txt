@@ -287,7 +287,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         task.wait(.5)
                     end
 
-                    local CurrentBall = GetBall("Court 6")
+                    local CurrentBall = GetBall("Court 4")
 
                     if CurrentBall then
                         if CurrentBall.Values.InUse.Value == false then
