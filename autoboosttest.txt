@@ -72,7 +72,7 @@ if ServerType ~= "ReservedServer" then
     if table.find(Team, Player.Name) or table.find(Team2, Player.Name) or TenPlayers then
         --task.wait(1)
         if Player.Name == FullTeam2[4] then
-            task.wait(31)
+            task.wait(23)
         end
     else
         task.wait(35)
