@@ -1,6 +1,7 @@
 --// Regular working booster
 repeat task.wait() until game:IsLoaded()
 task.wait(3)
+setfpscap(15)
 
 local Team = {
     "standsonlinemar",
