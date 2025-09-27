@@ -189,7 +189,7 @@ end)
 
 local function GetBall(BallName)
     for i,v in pairs(workspace.Balls:GetChildren()) do
-        if v.BallCourtName.Value == BallName then
+        if v.Values.BallCourtName.Value == BallName then
             return v
         end
     end
@@ -290,7 +290,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     local CurrentBall = GetBall("Court 6")
 
                     if CurrentBall then
-                        if CurrentBall.InUse.Value == false then
+                        if CurrentBall.Values.InUse.Value == false then
                             repeat
                                 Player.Character.PrimaryPart.CFrame = CFrame.new(CurrentBall.Position) * CFrame.new(0,2.5,0)
                                 task.wait(.05)
