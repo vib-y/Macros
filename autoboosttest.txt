@@ -187,6 +187,17 @@ Court.values.Pause:GetPropertyChangedSignal("Value"):Connect(function()
     end
 end)
 
+local function GetBall(BallName)
+    for i,v in pairs(workspace.Balls:GetChildren()) do
+        if v.BallCourtName.Value == BallName then
+            return v
+        end
+    end
+
+    return false
+end
+
+--workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
 if table.find(FullTeam, Player.Name) then
     while task.wait(.3) do
         if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
@@ -236,7 +247,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 JoinMatchThrees()
                 --print("Joining Match")
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
-                if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value >= 3 then
+                if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value > 3 then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
                         if Player.Name == Team2[1] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Handoff") 
@@ -246,22 +257,23 @@ elseif table.find(FullTeam2, Player.Name) then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
                     end
-                elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value < 3 then
-                    ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
+                elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 3 then
+                    --ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
+                    ReplicatedStorage.PlayerEvents.Dribbling:FireServer("DropBall")
                 elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
                         Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,2.5)
-                        task.wait(.5)
+                        task.wait(.3)
                     end
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
                     end
                 elseif table.find(Team2, Player.Name) then
-                    local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
+                    local Distance = (Court.spots.team1[2].Position - Player.Character.PrimaryPart.Position).magnitude
                     if Distance > 15 then
                         task.wait(1)
-                        Player.Character.PrimaryPart.CFrame = Court.spots.team1[table.find(Team2, Player.Name)].CFrame
+                        Player.Character.PrimaryPart.CFrame = Court.spots.team1[2].CFrame
                         task.wait(.5)
                     end
                 elseif not table.find(Team2, Player.Name) then
@@ -273,6 +285,17 @@ elseif table.find(FullTeam2, Player.Name) then
                     if Distance > 10 then
                         Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,2.5)
                         task.wait(.5)
+                    end
+
+                    local CurrentBall = GetBall("Court 6")
+
+                    if CurrentBall then
+                        if CurrentBall.InUse.Value == false then
+                            repeat
+                                Player.Character.PrimaryPart.CFrame = CFrame.new(CurrentBall.Position) * CFrame.new(0,2.5,0)
+                                task.wait(.05)
+                            until Player.Character:FindFirstChild("BallConnect")
+                        end
                     end
                 end
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value < 500 then
@@ -302,4 +325,3 @@ elseif table.find(FullTeam2, Player.Name) then
         end
     end
 end
-
