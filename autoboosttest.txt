@@ -251,7 +251,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
-                        Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-2)
+                        Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
                         task.wait(.5)
                     end
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
@@ -271,7 +271,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     end
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
-                        Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,0)
+                        Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-2.5)
                         task.wait(.5)
                     end
                 end
