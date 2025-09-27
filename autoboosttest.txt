@@ -197,6 +197,13 @@ local function GetBall(BallName)
     return false
 end
 
+local function is_between(hhmmss, start_hhmmss, end_hhmmss)
+    local total_seconds = hhmmss_to_seconds(hhmmss)
+    local start_seconds = hhmmss_to_seconds(start_hhmmss)
+    local end_seconds = hhmmss_to_seconds(end_hhmmss)
+    return total_seconds >= start_seconds and total_seconds <= end_seconds
+end
+
 --workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
 if table.find(FullTeam, Player.Name) then
     while task.wait(.3) do
@@ -285,7 +292,10 @@ elseif table.find(FullTeam2, Player.Name) then
                 elseif not table.find(Team2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
-                        TeleportService:Teleport(PlaceId)
+
+                        if not is_between(CurrentTime, 950, 1010) then
+                            TeleportService:Teleport(PlaceId)
+                        end
                     end
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
