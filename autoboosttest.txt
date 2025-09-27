@@ -212,6 +212,13 @@ local function is_between(hhmmss, start_hhmmss, end_hhmmss)
     return total_seconds >= start_seconds and total_seconds <= end_seconds
 end
 
+function is_in_window(hhmmss)
+    local total_seconds = hhmmss_to_seconds(hhmmss)
+    local interval = 575 -- 9m35s
+    local offset = total_seconds % interval
+    return offset >= 0 and offset <= 25
+end
+
 --workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
 if table.find(FullTeam, Player.Name) then
     while task.wait(.3) do
@@ -303,7 +310,7 @@ elseif table.find(FullTeam2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
 
-                        if not is_between(CurrentTime, 935, 1000) then
+                        if not is_in_window(CurrentTime) then
                             TeleportService:Teleport(PlaceId)
                         end
                     end
@@ -351,3 +358,4 @@ elseif table.find(FullTeam2, Player.Name) then
         end
     end
 end
+
