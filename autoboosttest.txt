@@ -260,6 +260,12 @@ elseif table.find(FullTeam2, Player.Name) then
                 elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 1 then
                     --ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
                     --ReplicatedStorage.PlayerEvents.Dribbling:FireServer("DropBall")
+                    for i = 1, 18 do
+                        --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
+                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
+                    end
+                    --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
+                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
                 elseif Player.Character:FindFirstChild("BallConnect") and not table.find(Team2, Player.Name) then
                     local Distance = (Player.Character.PrimaryPart.Position - Court.spots.NoPress.Position).magnitude
                     if Distance > 10 then
