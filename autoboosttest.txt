@@ -216,7 +216,7 @@ function is_in_window(hhmmss)
     local total_seconds = hhmmss_to_seconds(hhmmss)
     local interval = 560 -- 9m30s
     local offset = total_seconds % interval
-    return offset >= 0 and offset <= 40
+    return offset >= 0 and offset <= 45
 end
 
 --workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
