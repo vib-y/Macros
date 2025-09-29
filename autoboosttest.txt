@@ -4,8 +4,8 @@ task.wait(3)
 setfpscap(15)
 
 local Team = {
-    "standsonlinemar",
-    "thejustas"
+    "thejustas",
+    "standsonlinemar"
 }
 
 local FullTeam = {
@@ -32,7 +32,7 @@ local FullTeam2 = {
     "WingsOfDoomC"
 }
 
-local SecondPass = false
+local SecondPass = true
 local TenPlayers = true
 local HighestPosition = Team[1]
 
