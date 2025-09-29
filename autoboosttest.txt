@@ -27,14 +27,14 @@ local FullTeam2 = {
     "Eyeleventh",
     "4erify",
 
-    "WingsOfDoomB",
-    "FluwuffyVibe",
+    "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
+    "EightMightyOmegian", -- banned "FluwuffyVibe" Mass Steals
     "WingsOfDoomC"
 }
 
 local SecondPass = true
 local TenPlayers = true
-local HighestPosition = Team[1]
+local HighestPosition = Team[2]
 
 local Task = "Shooting"
 local State = 1
