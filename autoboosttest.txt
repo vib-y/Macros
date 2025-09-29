@@ -18,13 +18,13 @@ local FullTeam = {
 
 local Team2 = {
     "getsbands",
-    "Eyeleventh",
+    "irrlevantalt",
     "4erify"
 }
 
 local FullTeam2 = {
     "getsbands",
-    "Eyeleventh",
+    "irrlevantalt",
     "4erify",
 
     "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
