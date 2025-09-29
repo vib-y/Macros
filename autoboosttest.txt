@@ -32,7 +32,7 @@ local FullTeam2 = {
     "WingsOfDoomC"
 }
 
-local SecondPass = true
+local SecondPass = false
 local TenPlayers = true
 local HighestPosition = Team[1]
 
@@ -230,6 +230,11 @@ if table.find(FullTeam, Player.Name) then
             JoinMatch()
             --print("Joining Match")
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
+            if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP.Playmaking.Value <= 1000 then
+                for i = 1, 250 do
+                    ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
+                end
+            end
             if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
                 if Player.Name == Team[1] then
                     --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
@@ -274,7 +279,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 --print("Joining Match")
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
                 if Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value > 2 then
-                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 500 then
+                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value <= 30 then
                         if Player.Name == Team2[1] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[2]].Character, "Handoff") 
                         elseif Player.Name == Team2[2]  then
@@ -282,6 +287,12 @@ elseif table.find(FullTeam2, Player.Name) then
                         elseif Player.Name == Team2[3] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
+                        if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP.Playmaking.Value <= 1000 then
+                            for i = 1, 251 do
+                                ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
+                            end
+                        end
+                        task.wait()
                     end
                 elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 2 then
                     --ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
@@ -311,7 +322,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         task.wait(.5)
                     end
                 elseif not table.find(Team2, Player.Name) then
-                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 or Player.Name ~= FullTeam2[4] then
+                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
 
                         if not is_in_window(CurrentTime) then
@@ -335,7 +346,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         end
                     end]]
                 end
-            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value < 500 then
+            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value < 30 then
                 if Court.values.Calls.Calls2.Value == "Team1" and Player.Name == Team2[1] then
                     Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame * CFrame.new(0,3,0)
                     task.wait(2.5)
@@ -351,7 +362,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
                     end
                 end
-            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 500 then
+            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 then
                 if not table.find(Team2, Player.Name) then
                     TeleportService:Teleport(PlaceId)
                 end
