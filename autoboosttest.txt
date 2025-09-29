@@ -230,11 +230,12 @@ if table.find(FullTeam, Player.Name) then
             JoinMatch()
             --print("Joining Match")
         elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == false then
-            if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP.Playmaking.Value <= 1000 then
-                for i = 1, 250 do
+            --[[if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP["Defending_Rebounding"].Value <= 1000 then
+                for i = 1, 251 do
                     ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
                 end
-            end
+                print("Defending")
+            end]]
             if Player.Character:FindFirstChild("BallConnect") and table.find(Team, Player.Name) then
                 if Player.Name == Team[1] then
                     --Player.Character.PrimaryPart.CFrame = Players[Team[2]].Character.PrimaryPart.CFrame * CFrame.new(0,0,-1.5)
@@ -287,12 +288,6 @@ elseif table.find(FullTeam2, Player.Name) then
                         elseif Player.Name == Team2[3] then
                             ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Handoff") 
                         end
-                        if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP.Playmaking.Value <= 1000 then
-                            for i = 1, 251 do
-                                ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
-                            end
-                        end
-                        task.wait()
                     end
                 elseif Player.Character:FindFirstChild("BallConnect") and table.find(Team2, Player.Name) and Court.values.Shotclock.Value <= 2 then
                     --ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[FullTeam2[4]].Character, "Chest") 
@@ -315,6 +310,12 @@ elseif table.find(FullTeam2, Player.Name) then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest")
                     end
                 elseif table.find(Team2, Player.Name) then
+                    if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP["Defending_Rebounding"].Value <= 1000 then
+                        for i = 1, 251 do
+                            ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
+                        end
+                        print("Defending")
+                    end
                     local Distance = (Court.spots.team1[table.find(Team2, Player.Name)].Position - Player.Character.PrimaryPart.Position).magnitude
                     if Distance > 15 then
                         task.wait(1)
