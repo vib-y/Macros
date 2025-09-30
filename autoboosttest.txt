@@ -5,12 +5,12 @@ setfpscap(15)
 
 local Team = {
     "thejustas",
-    "standsonlinemar"
+    "Eyemangekyo"
 }
 
 local FullTeam = {
+    "Eyemangekyo",
     "thejustas",
-    "standsonlinemar",
 
     "Evil_LittleLizard",
     "TeamKengunAssets"
@@ -18,13 +18,13 @@ local FullTeam = {
 
 local Team2 = {
     "getsbands",
-    "irrlevantalt",
+    "standsonlinemar",
     "4erify"
 }
 
 local FullTeam2 = {
     "getsbands",
-    "irrlevantalt",
+    "standsonlinemar",
     "4erify",
 
     "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
@@ -34,7 +34,7 @@ local FullTeam2 = {
 
 local SecondPass = true
 local TenPlayers = true
-local HighestPosition = Team[2]
+local HighestPosition = Team[1]
 
 local Task = "Shooting"
 local State = 1
