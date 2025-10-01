@@ -365,7 +365,9 @@ elseif table.find(FullTeam2, Player.Name) then
                 end
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 then
                 if not table.find(Team2, Player.Name) then
-                    TeleportService:Teleport(PlaceId)
+                    if Players:FindFirstChild(FullTeam2[5]) and Players:FindFirstChild(FullTeam2[6]) then
+                        TeleportService:Teleport(PlaceId)
+                    end
                 end
             end
         end)
