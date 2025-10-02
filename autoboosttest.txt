@@ -9,16 +9,16 @@ local Team = {
 }
 
 local FullTeam = {
-    "Eyemangekyo",
+    "Eyemangekyo", --
     "cantgetblocks",
 
-    "Evil_LittleLizard",
-    "TeamKengunAssets"
+    "Evil_LittleLizard",--
+    "TeamKengunAssets" -- 
 }
 
 local Team2 = {
-    "thejustas",
-    "standsonlinemar",
+    "thejustas", --
+    "standsonlinemar",--
     "4erify"
 }
 
@@ -28,7 +28,7 @@ local FullTeam2 = {
     "4erify",
 
     "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
-    "EightMightyOmegian", -- banned "FluwuffyVibe" Mass Steals
+    "Evil_LittleDragon", -- banned "FluwuffyVibe" Mass Steals
     "WingsOfDoomC"
 }
 
