@@ -269,6 +269,12 @@ if table.find(FullTeam, Player.Name) then
                 end
             elseif not table.find(Team, Player.Name) then
                 Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3,-22)
+                if ReplicatedStorage.PlayerStats[Player.Name].BadgeEXP["Defending_Rebounding"].Value <= 1000 then
+                    for i = 1, 501 do
+                        ReplicatedStorage.PlayerEvents.Physical:FireServer(true, "Intercept")
+                    end
+                    print("Defending")
+                end
             end
         end
     end
@@ -325,7 +331,6 @@ elseif table.find(FullTeam2, Player.Name) then
                 elseif not table.find(Team2, Player.Name) then
                     if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
-
                         if not is_in_window(CurrentTime) then
                             TeleportService:Teleport(PlaceId)
                         end
@@ -365,9 +370,7 @@ elseif table.find(FullTeam2, Player.Name) then
                 end
             elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 then
                 if not table.find(Team2, Player.Name) then
-                    --if Players:FindFirstChild(FullTeam2[5]) and Players:FindFirstChild(FullTeam2[6]) then
-                        TeleportService:Teleport(PlaceId)
-                    --end
+                    TeleportService:Teleport(PlaceId)
                 end
             end
         end)
