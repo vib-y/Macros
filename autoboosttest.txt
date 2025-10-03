@@ -28,7 +28,7 @@ local FullTeam2 = {
     "4erify",
 
     "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
-    "Evil_LittleDragon", -- banned "FluwuffyVibe" Mass Steals
+    "0neF0rAllBac0n", -- banned "FluwuffyVibe" Mass Steals -- Evil_LittleDragon
     "WingsOfDoomC"
 }
 
