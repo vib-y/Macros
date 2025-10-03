@@ -226,6 +226,7 @@ end
 --workspace.Balls.Ball.Values.BallCourtName.Value = "Court 6"
 if table.find(FullTeam, Player.Name) then
     while task.wait(.3) do
+        local Success, Error = pcall(function()
         if not CheckQueue(Player.Name) and Player.Backpack.InGame.Value == false then
             JoinMatch()
             --print("Joining Match")
@@ -277,6 +278,8 @@ if table.find(FullTeam, Player.Name) then
                 end
             end
         end
+    end)
+    if Error then print(Error) end
     end
 elseif table.find(FullTeam2, Player.Name) then
     while task.wait(.15) do
