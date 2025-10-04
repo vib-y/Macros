@@ -332,7 +332,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         task.wait(.5)
                     end
                 elseif not table.find(Team2, Player.Name) then
-                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP["Defending_Rebounding"].Value >= 30 or Player.Name ~= FullTeam2[4] then
+                    if ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP["Playmaking"].Value >= 30 or Player.Name ~= FullTeam2[4] then
                         --Player.Character.PrimaryPart.CFrame = Court.OOBS.OOB1.CFrame * CFrame.new(3,5,1)
                         if not is_in_window(CurrentTime) then
                             TeleportService:Teleport(PlaceId)
