@@ -355,7 +355,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         end
                     end]]
                 end
-            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value < 30 then
+            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and Court.values.Calls.Value == "Inbound" and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP["Defending_Rebounding"].Value < 30 then
                 if Court.values.Calls.Calls2.Value == "Team1" and Player.Name == Team2[1] then
                     Player.Character.PrimaryPart.CFrame = Court.tempObjects.IB.Protection.CFrame * CFrame.new(0,3,0)
                     task.wait(2.5)
@@ -371,7 +371,7 @@ elseif table.find(FullTeam2, Player.Name) then
                         ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team2[1]].Character, "Chest") 
                     end
                 end
-            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP.Playmaking.Value >= 30 then
+            elseif Player.Backpack.InGame.Value == true and Court.values.Pause.Value == true and ReplicatedStorage.PlayerStats[Team2[3]].BadgeEXP["Defending_Rebounding"].Value >= 500 then
                 if not table.find(Team2, Player.Name) then
                     TeleportService:Teleport(PlaceId)
                 end
