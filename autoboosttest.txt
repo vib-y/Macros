@@ -243,15 +243,15 @@ if table.find(FullTeam, Player.Name) then
                     task.wait(.2)
                     ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[2]].Character, "Chest") -- Overhead
                 elseif Player.Name == Team[2] and (State == 2 or SecondPass == false) then
-                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,12.5) * CFrame.Angles(0, math.rad(180), 0)
+                    Player.Character.PrimaryPart.CFrame = Court.spots.NoPress.CFrame * CFrame.new(0,-3.5,-2.1) * CFrame.Angles(0, math.rad(180), 0)
                     -- CFrame.new(0,-3.5,-2.1) 3pointshot -- CFrame.new(0,-3.5,22.5) -- rim -- CFrame.new(0,-3.5,12.5) LAY
                     task.wait(.175)
-                    for i = 1, 15 do
-                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
-                        --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
+                    for i = 1, 18 do
+                        --ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Layup", "Up")
+                        ReplicatedStorage.PlayerEvents.Shooting:FireServer(true, "Shooting", "Standing Shot")
                     end
-                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
-                    --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
+                    --ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Layup", "Up")
+                    ReplicatedStorage.PlayerEvents.Shooting:FireServer(false, "Shooting", "Standing Shot")
                 elseif Player.Name == Team[2] and State == 1 and SecondPass == true then
                     task.wait(.25)
                     ReplicatedStorage.PlayerEvents.Passing:FireServer("Pass", Players[Team[1]].Character, "Chest") -- Overhead
