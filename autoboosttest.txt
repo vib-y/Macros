@@ -32,9 +32,9 @@ local FullTeam2 = {
     "WingsOfDoomC"
 }
 
-local SecondPass = false
+local SecondPass = true
 local TenPlayers = true
-local HighestPosition = Team[2]
+local HighestPosition = Team[1]
 
 local Task = "Shooting"
 local State = 1
