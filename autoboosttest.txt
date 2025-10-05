@@ -5,12 +5,12 @@ setfpscap(15)
 
 local Team = {
     "Eyemangekyo",
-    "cantgetblocks"
+    "4erify"
 }
 
 local FullTeam = {
     "Eyemangekyo", --
-    "cantgetblocks",
+    "4erify",
 
     "Evil_LittleLizard",--
     "TeamKengunAssets" -- 
@@ -19,13 +19,13 @@ local FullTeam = {
 local Team2 = {
     "thejustas", --
     "CreativeShooting",--
-    "4erify"
+    "cantgetblocks"
 }
 
 local FullTeam2 = {
     "thejustas",
     "CreativeShooting",
-    "4erify",
+    "cantgetblocks",
 
     "NineMightyOmegian", -- banned "WingsOfDoomB" Mass Shots
     "0neF0rAllBac0n", -- banned "FluwuffyVibe" Mass Steals -- Evil_LittleDragon
